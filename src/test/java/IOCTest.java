@@ -1,8 +1,5 @@
 import com.spring.bean.Person;
-import com.spring.config.MainConfig;
-import com.spring.config.MainConfig2;
-import com.spring.config.MainConfig3;
-import com.spring.config.MainConfig4;
+import com.spring.config.*;
 import com.spring.custom.ThreadScope;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -98,6 +95,21 @@ public class IOCTest {
         Object colorFactoryBean1 = applicationContext.getBean("&colorFactoryBean");
         System.out.println("bean的类型：" + colorFactoryBean1.getClass());
     }
+
+    @Test
+    public void testIOCTest_LifeCycle(){
+        // 1. 创建IOC容器
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(MainConfigLifeStyle.class);
+        System.out.println("容器创建完成");
+        //多实例，在调用时，才生成对象
+        Object bean = applicationContext.getBean("cat");
+
+        // 2. 关闭IOC容器
+        applicationContext.close();
+        //先是调用了Car类的构造方法来创建Car对象，接下来便是调用了Car对象的init()方法来进行初始化。最后在容器关闭时，调用了bean的销毁方法
+        //在多实例bean情况下，Spring不会自动调用bean的销毁方法。
+    }
+
 
 
 }
