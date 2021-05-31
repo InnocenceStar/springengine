@@ -91,6 +91,12 @@ public class IOCTest {
         for (String name : definitionNames) {
             System.out.println(name);
         }
+        //获取color对象
+        Object colorFactoryBean = applicationContext.getBean("colorFactoryBean");
+        System.out.println("bean的类型：" + colorFactoryBean.getClass());
+        //获取color工厂对象本身
+        Object colorFactoryBean1 = applicationContext.getBean("&colorFactoryBean");
+        System.out.println("bean的类型：" + colorFactoryBean1.getClass());
     }
 
 
